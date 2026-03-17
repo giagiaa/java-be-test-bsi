@@ -1,0 +1,54 @@
+-- V10: Comprehensive Mock Data (10 distinct rows per major table)
+
+-- 1. Seed Users (passwords are all 'password123' hashed)
+INSERT INTO users (id, username, email, password, enabled) VALUES
+('10000000-0000-0000-0000-000000000011', 'user1', 'user1@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE),
+('10000000-0000-0000-0000-000000000012', 'user2', 'user2@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE),
+('10000000-0000-0000-0000-000000000013', 'user3', 'user3@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE),
+('10000000-0000-0000-0000-000000000014', 'user4', 'user4@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE),
+('10000000-0000-0000-0000-000000000015', 'user5', 'user5@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE),
+('10000000-0000-0000-0000-000000000016', 'user6', 'user6@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE),
+('10000000-0000-0000-0000-000000000017', 'user7', 'user7@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE),
+('10000000-0000-0000-0000-000000000018', 'user8', 'user8@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE),
+('10000000-0000-0000-0000-000000000019', 'user9', 'user9@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE),
+('10000000-0000-0000-0000-000000000020', 'user10', 'user10@example.com', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.TVuHOn2', TRUE);
+
+-- 2. Assign ROLE_USER to all new users
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, r.id FROM users u, roles r WHERE u.username LIKE 'user%' AND r.name = 'ROLE_USER';
+
+-- 3. Seed Concerts (Start from ID ...11 to avoid collision with V9)
+INSERT INTO concerts (id, name, artist, venue, datetime, capacity, status, created_by) VALUES
+('c0000000-0000-0000-0000-000000000011', 'World Tour: BTS', 'BTS', 'Stadium Jakarta', '2026-06-10T20:00:00Z', 50000, 'UPCOMING', '00000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000012', 'Coldplay - Music of the Spheres', 'Coldplay', 'Gelora Bung Karno', '2026-07-15T19:30:00Z', 80000, 'UPCOMING', '00000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000013', 'Taylor Swift: Eras Tour', 'Taylor Swift', 'Singapore National Stadium', '2026-03-20T18:00:00Z', 55000, 'ONGOING', '00000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000014', 'Dewa 19 - Reunion', 'Dewa 19', 'Jakarta International Stadium', '2026-04-05T20:00:00Z', 40000, 'UPCOMING', '00000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000015', 'Ed Sheeran: Mathematics Tour', 'Ed Sheeran', 'Stadion Madya', '2026-02-14T19:00:00Z', 20000, 'COMPLETED', '00000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000016', 'Sheila on 7 - Tunggu Aku', 'Sheila on 7', 'Stadion Kridosono', '2026-05-12T19:30:00Z', 15000, 'UPCOMING', '00000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000017', 'Jazz Goes To Campus', 'Various Artists', 'UI Depok', '2026-11-20T10:00:00Z', 10000, 'UPCOMING', '00000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000018', 'Rock In Solo', 'Various Bands', 'Benteng Vastenburg', '2026-10-28T13:00:00Z', 8000, 'UPCOMING', '00000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000019', 'LANY - A Beautiful Blur', 'LANY', 'Beach City International Stadium', '2026-08-09T20:00:00Z', 12000, 'UPCOMING', '00000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000020', 'Niki: Nicole World Tour', 'Niki Zefanya', 'JIExpo Hall', '2026-09-12T19:00:00Z', 8000, 'UPCOMING', '00000000-0000-0000-0000-000000000001');
+
+-- 4. Seed Ticket Categories (Start from ID ...11)
+INSERT INTO ticket_categories (id, concert_id, name, base_price, capacity, available_stock) VALUES
+('20000000-0000-0000-0000-000000000011', 'c0000000-0000-0000-0000-000000000011', 'VIP Royal', 5000000, 500, 500),
+('20000000-0000-0000-0000-000000000012', 'c0000000-0000-0000-0000-000000000012', 'CAT 1 (Seated)', 3500000, 2000, 2000),
+('20000000-0000-0000-0000-000000000013', 'c0000000-0000-0000-0000-000000000013', 'Festival A', 2500000, 5000, 5000),
+('20000000-0000-0000-0000-000000000014', 'c0000000-0000-0000-0000-000000000014', 'Balcony', 1200000, 1000, 1000),
+('20000000-0000-0000-0000-000000000015', 'c0000000-0000-0000-0000-000000000015', 'General Admission', 900000, 5000, 0), -- Sold out for testing
+('20000000-0000-0000-0000-000000000016', 'c0000000-0000-0000-0000-000000000016', 'Presale 1', 400000, 2000, 10), -- Low stock for surge pricing test
+('20000000-0000-0000-0000-000000000017', 'c0000000-0000-0000-0000-000000000017', 'Early Bird', 300000, 3000, 3000),
+('20000000-0000-0000-0000-000000000018', 'c0000000-0000-0000-0000-000000000018', 'Daily Pass', 150000, 4000, 4000),
+('20000000-0000-0000-0000-000000000019', 'c0000000-0000-0000-0000-000000000019', 'Standard', 800000, 5000, 5000),
+('20000000-0000-0000-0000-000000000020', 'c0000000-0000-0000-0000-000000000020', 'VIP', 2000000, 200, 200);
+
+-- 5. Seed some Bookings (completed ones) using new user/concert/cat IDs
+INSERT INTO bookings (id, user_id, concert_id, category_id, quantity, unit_price, total_price, status, idempotency_key, locked_until, paid_at, confirmed_at) VALUES
+('b0000000-0000-0000-0000-000000000011', '10000000-0000-0000-0000-000000000011', 'c0000000-0000-0000-0000-000000000015', '20000000-0000-0000-0000-000000000015', 2, 900000, 1800000, 'PAID', 'seed-key-11', NOW(), NOW(), NOW()),
+('b0000000-0000-0000-0000-000000000012', '10000000-0000-0000-0000-000000000012', 'c0000000-0000-0000-0000-000000000015', '20000000-0000-0000-0000-000000000015', 1, 900000, 900000, 'PAID', 'seed-key-12', NOW(), NOW(), NOW());
+
+-- 6. Seed Ledger for those PAID bookings
+INSERT INTO ledger (ledger_id, booking_id, user_id, amount, payment_method, status) VALUES
+(gen_random_uuid(), 'b0000000-0000-0000-0000-000000000011', '10000000-0000-0000-0000-000000000011', 1800000, 'CREDIT_CARD', 'SUCCESS'),
+(gen_random_uuid(), 'b0000000-0000-0000-0000-000000000012', '10000000-0000-0000-0000-000000000012', 900000, 'E_WALLET', 'SUCCESS');
